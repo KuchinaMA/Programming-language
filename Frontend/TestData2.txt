@@ -1,0 +1,6 @@
+factorial присвоить 5 - 4!
+count присвоить 1!
+покуда (count менее 5) {
+    factorial присвоить factorial умножить_на count!
+    count присвоить count плюс 1!
+}

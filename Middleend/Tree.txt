@@ -1,0 +1,1 @@
+ ( ; ( = ( factorial nil nil ) ( 1 nil nil ) ) ( ; ( = ( count nil nil ) ( 1 nil nil ) ) ( ; ( while ( < ( count nil nil ) ( 5 nil nil ) ) ( ; ( = ( factorial nil nil ) ( * ( factorial nil nil ) ( count nil nil ) ) ) ( ; ( = ( count nil nil ) ( add ( count nil nil ) ( 1 nil nil ) ) ) nil ) ) ) nil ) ) )
