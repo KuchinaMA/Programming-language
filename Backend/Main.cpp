@@ -7,12 +7,15 @@
 
 int main() {
 
-    FILE* input = fopen("../Frontend/Tree.txt", "r");
+    FILE* input = fopen("../Middleend/Tree.txt", "r");
     MathExpression* exp = read_data(input);
-    simplify_expression(exp);
 
     graph_dump(exp);
     fclose(input);
+
+    FILE* output = fopen("AsmCode.txt", "w");
+    print_tree_asm(exp, output);
+    fclose(output);
 
     return 0;
 }

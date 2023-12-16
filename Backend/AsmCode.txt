@@ -1,0 +1,23 @@
+4
+mipt
+PUSH 1
+POP rax
+PUSH 1
+POP rbx
+:3
+PUSH_R rbx
+PUSH 5
+JA :1
+PUSH_R rax
+PUSH_R rbx
+MUL
+POP rax
+PUSH_R rbx
+PUSH 1
+ADD
+POP rbx
+JMP :3
+:1
+PUSH_R rax
+OUT
+HLT
