@@ -4,10 +4,10 @@ PUSH 1
 POP rax
 PUSH 1
 POP rbx
-:3
+:1
 PUSH_R rbx
 PUSH 5
-JA :1
+JA :2
 PUSH_R rax
 PUSH_R rbx
 MUL
@@ -16,8 +16,8 @@ PUSH_R rbx
 PUSH 1
 ADD
 POP rbx
-JMP :3
-:1
+JMP :1
+:2
 PUSH_R rax
 OUT
 HLT

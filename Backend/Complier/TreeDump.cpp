@@ -7,18 +7,8 @@
 #include "ReadData.h"
 #include "Diff.h"
 
-/*void print_node_pre(const Node* node, FILE* output) {
+static int LabelNum = 1;
 
-    if (node == 0) {
-        fprintf(output, " .");
-        return;
-    }
-    fprintf(output, " (");
-    print_data(node, output);
-    print_node_pre(node->left, output);
-    print_node_pre(node->right, output);
-    fprintf(output, " )");
-} */
 
 void print_data(const Node* node, FILE* output) {
 
@@ -31,10 +21,6 @@ void print_data(const Node* node, FILE* output) {
             break;
     }
 }
-
-/*void print_tree_in(const MathExpression* expression, FILE* output) {
-    print_node_in(expression, expression->tree->root, output, BEGIN_OP, MID_POS);
-}  */
 
 void print_tree_pre(const MathExpression* expression, FILE* output) {
     print_node_pre(expression, expression->tree->root, output, BEGIN_OP, MID_POS);
@@ -263,118 +249,6 @@ void edge_graph_dump(const Node* node, FILE* dotfile) {
     }
 }
 
-/*void print_tree_tex(const MathExpression* expression, FILE* output) {
-
-    fprintf(output, "\\[");
-    print_node_tex(expression, expression->tree->root, output, BEGIN_OP, MID_POS);
-    fprintf(output, "\\]\n");
-}
-
-
-void print_node_tex(const MathExpression* expression, const Node* node, FILE* output, int parent_data, int position) {
-
-    if (node == 0)
-        return;
-
-    if (node->type == T_NUM)
-        print_num(expression, node, output);
-    else if (node->type == T_OP)
-        print_oper_tex(expression, node, output, parent_data, position);
-    else if (node->type == T_VAR)
-        print_var(expression, node, output);
-}
-
-void print_oper_tex(const MathExpression* expression, const Node* node, FILE* output, int parent_data, int position) {
-
-    if (node->data == DIV) {
-        fprintf(output, " \\frac{");
-        print_node_tex(expression, node->left, output, node->data, LEFT_POS);
-        fprintf(output, "}{");
-        print_node_tex(expression, node->right, output, node->data, RIGHT_POS);
-        fprintf(output, "}");
-    }
-
-    else if (node->data == POW) {
-
-        print_node_tex(expression, node->left, output, node->data, LEFT_POS);
-        fprintf(output, " %s {", operation_to_sign(node));
-        print_node_tex(expression, node->right, output, node->data, RIGHT_POS);
-        fprintf(output, "}");
-    }
-
-    else {
-        int bracket = compare_operations_tex(parent_data, node->data, position);
-        if (bracket)
-            fprintf(output, " (");
-
-        print_node_tex(expression, node->left, output, node->data, LEFT_POS);
-
-        if (node->data == MUL)
-            fprintf(output, " \\cdot");
-        else
-            fprintf(output, " %s", operation_to_sign(node));
-
-        print_node_tex(expression, node->right, output, node->data, RIGHT_POS);
-
-        if (bracket)
-            fprintf(output, " )");
-    }
-}
-
-int compare_operations_tex(int parent_op, int cur_op, int position) {
-
-    switch(parent_op) {
-
-        case ADD:
-            return 0;
-
-        case SUB:
-
-            if (cur_op == ADD || cur_op == SUB) {
-            if (position == RIGHT_POS)
-                return 1;
-            }
-            else
-                return 0;
-
-        case MUL:
-
-            if (cur_op == ADD || cur_op == SUB)
-                return 1;
-
-            else
-                return 0;
-
-        case DIV:
-            return 0;
-
-        case POW:
-            if (position == LEFT_POS)
-                return 1;
-            else
-                return 0;
-
-        case LN:
-            return 1;
-
-        case SIN:
-            return 1;
-
-        case COS:
-            return 1;
-
-        case TAN:
-            return 1;
-
-        case CTG:
-            return 1;
-
-        case BEGIN_OP:
-            return 0;
-    }
-
-} */
-
 
 void print_tree_asm(const MathExpression* expression, FILE* output) {
     fprintf(output, "4\n");
@@ -401,17 +275,11 @@ void print_node_asm(const MathExpression* expression, const Node* node, FILE* ou
 
 void print_num_asm(const MathExpression* expression, const Node* node, FILE* output) {
 
-    //print_node_asm(expression, node->left, output, node->data, LEFT_POS);
-    //fprintf(output, "PUSH ");
     fprintf(output, "%d\n", node->data);
-    //print_node_asm(expression, node->right, output, node->data, RIGHT_POS);
-
 }
 
 void print_oper_asm(const MathExpression* expression, const Node* node, FILE* output, int parent_data, int position) {
 
-    //fprintf(output, " %s", operation_to_sign(node));
-    //print_node_asm(expression, node->left, output, node->data, LEFT_POS);
     if (ADD <= node->data && node->data <= DIV) {
 
         if(node->left->type == T_NUM)
@@ -431,13 +299,26 @@ void print_oper_asm(const MathExpression* expression, const Node* node, FILE* ou
 
     else if (node->data == WHILE) {
 
-        fprintf(output, ":3\n");
+        fprintf(output, ":%d\n", LabelNum);
+        int old_label = LabelNum;
+        LabelNum++;
 
         print_node_asm(expression, node->left, output, node->data, LEFT_POS);
         print_node_asm(expression, node->right, output, node->data, RIGHT_POS);
 
-        fprintf(output, "JMP :3\n");
-        fprintf(output, ":1\n");
+        fprintf(output, "JMP :%d\n", old_label);
+        fprintf(output, ":%d\n", LabelNum);
+        LabelNum++;
+
+    }
+
+    else if (node->data == IF) {
+
+        print_node_asm(expression, node->left, output, node->data, LEFT_POS);
+        print_node_asm(expression, node->right, output, node->data, RIGHT_POS);
+
+        fprintf(output, ":%d\n", LabelNum);
+        LabelNum++;
 
     }
 
@@ -456,10 +337,10 @@ void print_oper_asm(const MathExpression* expression, const Node* node, FILE* ou
         print_node_asm(expression, node->right, output, node->data, RIGHT_POS);
 
         if (node->data == LESS)
-            fprintf(output, "JA :1\n");
+            fprintf(output, "JA :%d\n", LabelNum);
 
         else if (node->data == MORE)
-            fprintf(output, "JB :1\n");
+            fprintf(output, "JB :%d\n", LabelNum);
     }
 
     else if (node->data == EQUAL) {
@@ -482,16 +363,10 @@ void print_oper_asm(const MathExpression* expression, const Node* node, FILE* ou
         print_node_asm(expression, node->right, output, node->data, RIGHT_POS);
     }
 
-
-    //print_node_asm(expression, node->right, output, node->data, RIGHT_POS);
 }
 
 void print_var_asm(const MathExpression* expression, const Node* node, FILE* output) {
 
-    //fprintf(output, " %s", expression->variables_table[node->data].name);
-    //print_node_asm(expression, node->left, output, node->data, LEFT_POS);
-    //fprintf(output, "PUSH_R ");
-    //fprintf(output, " %s", expression->variables_table[node->data].name);
     switch(node->data) {
         case 0:
             fprintf(output, "rax\n");
@@ -503,5 +378,4 @@ void print_var_asm(const MathExpression* expression, const Node* node, FILE* out
             fprintf(output, "rcx\n");
             break;
     }
-    //print_node_asm(expression, node->right, output, node->data, RIGHT_POS);
 }
