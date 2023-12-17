@@ -13,7 +13,7 @@ int main() {
     graph_dump(exp);
     fclose(input);
 
-    FILE* output = fopen("AsmCode.txt", "w");
+    FILE* output = fopen("Complier/AsmCode.txt", "w");
     print_tree_asm(exp, output);
     fclose(output);
 
