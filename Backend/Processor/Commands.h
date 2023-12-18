@@ -8,7 +8,7 @@ DEF_CMD(PUSH, 1, 1, {
 
 DEF_CMD(PUSH_R, 2, 2, {
     elem_t number = codeArr[ip+1];
-    if (number == RAX || number == RBX || number == RCX) {
+    if (number == RAX || number == RBX || number == RCX || number == RDX || number == R1X || number == R2X) {
         stack_push(&proc->stack, proc->registers[number]);
         ip++;
     }
@@ -19,7 +19,7 @@ DEF_CMD(PUSH_R, 2, 2, {
 
 DEF_CMD(POP, 3, 2, {
     elem_t number = codeArr[ip+1];
-    if (number == RAX || number == RBX || number == RCX) {
+    if (number == RAX || number == RBX || number == RCX || number == RDX || number == R1X || number == R2X) {
         stack_pop(&proc->stack, &proc->registers[number]);
         ip++;
     }

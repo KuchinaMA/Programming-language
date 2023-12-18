@@ -44,19 +44,16 @@ Node* derivative(MathExpression* expression, const Node* node, FILE* output, Lin
 
         case T_NUM: {
             Node* res = NUM_NODE(0);
-            //print_phrase_diff(expression, node, res, output, text);
             return res;
         }
 
         case T_VAR: {
             Node* res = NUM_NODE(1);
-            //print_phrase_diff(expression, node, res, output, text);
             return res;
         }
 
         case T_OP: {
             Node* res = diff_operation(expression, node, output, text);
-            //print_phrase_diff(expression, node, res, output, text);
             return res;
         }
 
@@ -281,7 +278,7 @@ void remove_const_values(MathExpression* expression, Node* node, bool* changes) 
     if (RIGHT != NULL)
         remove_const_values(expression, RIGHT, changes);
 
-    if (TYPE == T_OP && LEFT != NULL && RIGHT != NULL) {
+    if (TYPE == T_OP && LEFT != NULL && RIGHT != NULL && DATA != DIV) {
 
         if (!find_var(LEFT) && !find_var(RIGHT)) {
 
@@ -432,30 +429,6 @@ void simplify_expression(MathExpression* expression) {
     //free(phrases_data);
 }
 
-
-/*void print_phrase(MathExpression* expression, FILE* output, LinesData* text) {
-
-    assert(expression);
-
-    int phrase_number = rand() % NUMBER_OF_STRINGS;
-    fprintf(output, "%s", text[phrase_number].pointer);
-    print_tree_tex(expression, output);
-    fprintf(output, "\n");
-} */
-
-/*void print_phrase_diff(MathExpression* expression, const Node* node, const Node* res, FILE* output, LinesData* text) {
-
-    assert(expression);
-
-    int phrase_number = rand() % NUMBER_OF_STRINGS;
-    fprintf(output, "%s", text[phrase_number].pointer);
-    fprintf(output, "\\[(");
-    print_node_tex(expression, node, output, BEGIN_OP, MID_POS);
-    fprintf(output, ")' = ");
-    print_node_tex(expression, res, output, BEGIN_OP, MID_POS);
-    fprintf(output, "\\]");
-    fprintf(output, "\n");
-}  */
 
 
 

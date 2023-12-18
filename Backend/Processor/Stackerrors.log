@@ -22,3 +22,235 @@
 --------------File was closed successfully-------------
 
 
+--------------File was opened at 11:56:37--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 12:00:16--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 12:00:16--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 12:35:19--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 12:35:19--------------
+In function: stack_realloc ERROR! Pointer to stk.data is NULL
+
+ERROR! size < 0
+
+stack_dump from file: Stack.cpp line 111 function: stack_pop stack: stk
+
+size = -1
+capacity = 1
+[-1] = POISONED
+[0] = POISONED
+ERROR! size < 0
+
+stack_dump from file: Stack.cpp line 52 function: stack_dtor stack: stk
+
+size = -1
+capacity = 1
+[-1] = POISONED
+[0] = POISONED
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 12:35:19--------------
+In function: stack_realloc ERROR! Pointer to stk.data is NULL
+
+ERROR! size < 0
+
+stack_dump from file: Stack.cpp line 111 function: stack_pop stack: stk
+
+size = -1
+capacity = 1
+[-1] = POISONED
+[0] = POISONED
+ERROR! size < 0
+
+stack_dump from file: Stack.cpp line 52 function: stack_dtor stack: stk
+
+size = -1
+capacity = 1
+[-1] = POISONED
+[0] = POISONED
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 12:35:19--------------
+In function: stack_realloc ERROR! Pointer to stk.data is NULL
+
+ERROR! size < 0
+
+stack_dump from file: Stack.cpp line 111 function: stack_pop stack: stk
+
+size = -1
+capacity = 1
+[-1] = POISONED
+[0] = POISONED
+ERROR! size < 0
+
+stack_dump from file: Stack.cpp line 52 function: stack_dtor stack: stk
+
+size = -1
+capacity = 1
+[-1] = POISONED
+[0] = POISONED
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 12:35:19--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 12:35:19--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 12:35:19--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 12:35:19--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 12:35:19--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 12:35:19--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 12:35:19--------------
+In function: stack_realloc ERROR! Pointer to stk.data is NULL
+
+ERROR! size < 0
+
+stack_dump from file: Stack.cpp line 111 function: stack_pop stack: stk
+
+size = -1
+capacity = 1
+[-1] = POISONED
+[0] = POISONED
+ERROR! size < 0
+
+stack_dump from file: Stack.cpp line 97 function: stack_pop stack: stk
+
+size = -1
+capacity = 1
+[-1] = POISONED
+[0] = POISONED
+ERROR! size < 0
+
+stack_dump from file: Stack.cpp line 52 function: stack_dtor stack: stk
+
+size = -1
+capacity = 1
+[-1] = POISONED
+[0] = POISONED
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 13:00:08--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 13:00:08--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 13:06:34--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 13:06:34--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 13:06:34--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 13:06:34--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 13:06:34--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 13:06:34--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 13:06:34--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 13:06:34--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 13:06:34--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 14:10:03--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 14:10:03--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 14:10:03--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 14:12:37--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 14:53:58--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 14:53:58--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 14:53:58--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 14:53:58--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 14:53:58--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 14:53:58--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 15:05:02--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 15:05:02--------------
+--------------File was closed successfully-------------
+
+
+--------------File was opened at 15:05:02--------------
+--------------File was closed successfully-------------
+
+

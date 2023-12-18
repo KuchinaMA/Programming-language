@@ -2,7 +2,7 @@
 #define FUNCS_H_INCLUDED
 
 const int MAX_TOKENS_NUMB = 100;
-const int KEYWORDS_NUM = 15;
+const int KEYWORDS_NUM = 16;
 const int MAX_NAMES_NUM = 100;
 
 struct CodeText {
@@ -15,11 +15,26 @@ struct TokensArray {
     int tokens_p;
 };
 
+/*struct Name {
+    int type;
+    int number;
+    char* name;
+}; */
+
+struct Names {
+    Name names_table[MAX_NAMES_NUM];
+    int names_num;
+    int vars_num;
+};
+
 CodeText* codedata_ctor(const char* str);
 void codedata_dtor(CodeText* text);
 
 TokensArray* tokens_ctor();
 void tokens_dtor(TokensArray* arr);
+
+Names* names_ctor();
+void names_dtor(Names* names);
 
 MathExpression* create_expression(const char* str, int size);
 

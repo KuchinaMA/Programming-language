@@ -232,11 +232,11 @@ void read_operation(FILE* file, MathExpression* exp, Node* node) {
         node->data = DIV;
         node->type = T_OP;
     }
-    else if (strcmp(current, "<") == 0) {
+    else if (strcmp(current, "less") == 0) {
         node->data = LESS;
         node->type = T_OP;
     }
-    else if (strcmp(current, ">") == 0) {
+    else if (strcmp(current, "more") == 0) {
         node->data = MORE;
         node->type = T_OP;
     }
@@ -250,6 +250,10 @@ void read_operation(FILE* file, MathExpression* exp, Node* node) {
     }
     else if (strcmp(current, "ln") == 0) {
         node->data = LN;
+        node->type = T_OP;
+    }
+    else if (strcmp(current, "^") == 0) {
+        node->data = POW;
         node->type = T_OP;
     }
     else if (strcmp(current, "pow") == 0) {

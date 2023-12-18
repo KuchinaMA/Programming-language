@@ -48,10 +48,18 @@ void tokens_dtor(TokensArray* arr) {
     free(arr);
 }
 
+Names* names_ctor() {
+
+    Names* names = (Names*)calloc(1, sizeof(Names));
+    names->names_num = KEYWORDS_NUM;
+    names->vars_num - 0;
+    fill_names_table(names->names_table);
+}
 
 MathExpression* create_expression(const char* str, int size) {
 
     fill_names_table(names_table);
+    //Names* names = names_ctor();
 
     CodeText* text = codedata_ctor(str);
     TokensArray* tokens_arr = tokens_ctor();
@@ -342,16 +350,6 @@ Node* get_operator(TokensArray* tokens_arr) {
         return get_assign(tokens_arr);
 }
 
-
-/*int find_variable(char* name, Variable* table) {
-
-    for (int i = 0; i < vars_num; i++) {
-        if (strcmp(name, table[i].name) == 0)
-            return i;
-    }
-    return -1;
-} */
-
 int find_name(char* name, Name* table) {
 
     for (int i = 0; i < names_num; i++) {
@@ -387,6 +385,8 @@ void fill_names_table(Name* table) {
     table[12].name = "присвоить";
     table[13].name = "более";
     table[14].name = "менее";
+
+    table[15].name = "ввести";
 }
 
 void copy_vars(MathExpression* new_exp, const Name* names_table) {

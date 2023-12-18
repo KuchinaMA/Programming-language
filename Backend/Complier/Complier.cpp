@@ -148,6 +148,10 @@ int print_reg(char* line, elem_t* codeArr, int position) {
 
     else if (strcmp(line, "rdx") == 0) codeArr[position] = (elem_t)RDX;
 
+    else if (strcmp(line, "r1x") == 0) codeArr[position] = (elem_t)R1X;
+
+    else if (strcmp(line, "r2x") == 0) codeArr[position] = (elem_t)R2X;
+
     else printf("Incorrect register");
 
     return NoErrors;

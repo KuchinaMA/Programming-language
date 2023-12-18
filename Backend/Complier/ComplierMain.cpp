@@ -14,19 +14,19 @@
 
 int main() {
 
-    FILE* input = fopen("C:/Users/admin/Documents/GitHub/Programming-language/Middleend/Tree.txt", "r");
+    FILE* input = fopen("C:/Users/admin/Documents/GitHub/Programming-language/Middleend/Tree2.txt", "r");
     MathExpression* exp = read_data(input);
 
     graph_dump(exp);
     fclose(input);
 
-    FILE* output = fopen("AsmCode.txt", "w");
+    FILE* output = fopen("AsmCode2.txt", "w");
     print_tree_asm(exp, output);
     fclose(output);
 
 
-    FILE* input2 = fopen("AsmCode.txt", "r");
-    FILE* output2 = fopen("MachineCodeF.bin", "wb");
+    FILE* input2 = fopen("AsmCode2.txt", "r");
+    FILE* output2 = fopen("MachineCode2.bin", "wb");
 
     complier(input2, output2);
 

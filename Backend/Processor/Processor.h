@@ -11,7 +11,7 @@ enum ProcessorErrors {
 
 
 const int ProcessorVersion = 2;
-const int NumRegs = 3;
+const int NumRegs = 6;
 
 struct Processor {
     struct Stack stack;

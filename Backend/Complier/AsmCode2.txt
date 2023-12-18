@@ -1,0 +1,45 @@
+4
+mipt
+PUSH 1
+POP rax
+PUSH -3
+POP rbx
+PUSH 2
+POP rcx
+PUSH_R rbx
+PUSH_R rbx
+MUL
+PUSH 4
+PUSH_R rax
+MUL
+PUSH_R rcx
+MUL
+SUB
+POP rdx
+PUSH -1
+PUSH_R rbx
+MUL
+PUSH_R rdx
+SQRT
+SUB
+PUSH 2
+PUSH_R rax
+MUL
+DIV
+POP r1x
+PUSH -1
+PUSH_R rbx
+MUL
+PUSH_R rdx
+SQRT
+ADD
+PUSH 2
+PUSH_R rax
+MUL
+DIV
+POP r2x
+PUSH_R r1x
+OUT
+PUSH_R r2x
+OUT
+HLT

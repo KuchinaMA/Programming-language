@@ -38,6 +38,8 @@ enum Operations {
     MORE  = 34,
     LESS  = 35,
 
+    IN    = 36,
+
     OPEN_BR  = 50,
     CLOSE_BR = 51,
     OPEN_F   = 52,

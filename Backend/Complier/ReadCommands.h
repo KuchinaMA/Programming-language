@@ -20,7 +20,9 @@ enum Regs {
     RAX = 0,
     RBX = 1,
     RCX = 2,
-    RDX = 3
+    RDX = 3,
+    R1X = 4,
+    R2X = 5
 };
 
 enum TypeArgs {

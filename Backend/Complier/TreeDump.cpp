@@ -87,17 +87,17 @@ char* operation_to_sign(const Node* node) {
         case DIV:
             return "DIV";
         case LN:
-            return "ln";
+            return "LN";
         case POW:
-            return "^";
+            return "POW";
         case SIN:
-            return "sin";
+            return "SIN";
         case COS:
-            return "cos";
+            return "COS";
         case TAN:
-            return "tan";
+            return "TAN";
         case CTG:
-            return "ctg";
+            return "CTG";
         case EQUAL:
             return "=";
         case MORE:
@@ -254,8 +254,12 @@ void print_tree_asm(const MathExpression* expression, FILE* output) {
     fprintf(output, "4\n");
     fprintf(output, "mipt\n");
     print_node_asm(expression, expression->tree->root, output, BEGIN_OP, MID_POS);
-    fprintf(output, "PUSH_R rax\n");
+    fprintf(output, "PUSH_R r1x\n");
     fprintf(output, "OUT\n");
+    fprintf(output, "PUSH_R r2x\n");
+    fprintf(output, "OUT\n");
+    //fprintf(output, "PUSH_R rax\n");
+    //fprintf(output, "OUT\n");
     fprintf(output, "HLT\n");
 }
 
@@ -297,9 +301,44 @@ void print_oper_asm(const MathExpression* expression, const Node* node, FILE* ou
         fprintf(output, "%s\n", operation_to_sign(node));
     }
 
+    else if (node->data == POW) {
+
+        if (node->right->data == DIV && node->right->left->type  == T_NUM && node->right->left->data  == 1
+                                     && node->right->right->type == T_NUM && node->right->right->data == 2) {
+
+            if(node->left->type == T_NUM)
+                fprintf(output, "PUSH ");
+            else if(node->left->type == T_VAR)
+                fprintf(output, "PUSH_R ");
+            print_node_asm(expression, node->left, output, node->data, LEFT_POS);
+
+            fprintf(output, "SQRT\n");
+        }
+
+        else {
+
+            if(node->left->type == T_NUM)
+                fprintf(output, "PUSH ");
+            else if(node->left->type == T_VAR)
+                fprintf(output, "PUSH_R ");
+            print_node_asm(expression, node->left, output, node->data, LEFT_POS);
+
+            if(node->right->type == T_NUM)
+                fprintf(output, "PUSH ");
+            else if(node->right->type == T_VAR)
+                fprintf(output, "PUSH_R ");
+            print_node_asm(expression, node->right, output, node->data, RIGHT_POS);
+
+            fprintf(output, "%s\n", operation_to_sign(node));
+
+        }
+
+    }
+
     else if (node->data == WHILE) {
 
         fprintf(output, ":%d\n", LabelNum);
+        //printf("here\n");
         int old_label = LabelNum;
         LabelNum++;
 
@@ -376,6 +415,15 @@ void print_var_asm(const MathExpression* expression, const Node* node, FILE* out
             break;
         case 2:
             fprintf(output, "rcx\n");
+            break;
+        case 3:
+            fprintf(output, "rdx\n");
+            break;
+        case 4:
+            fprintf(output, "r1x\n");
+            break;
+        case 5:
+            fprintf(output, "r2x\n");
             break;
     }
 }

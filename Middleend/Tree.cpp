@@ -280,6 +280,10 @@ void read_operation(FILE* file, MathExpression* exp, Node* node) {
         node->data = WHILE;
         node->type = T_OP;
     }
+    else if (strcmp(current, "in") == 0) {
+        node->data = IN;
+        node->type = T_OP;
+    }
     else
         read_variable(file, exp, node, current);
 }
@@ -305,16 +309,6 @@ void read_variable(FILE* file, MathExpression* exp, Node* node, char* current) {
         node->data = res;
 }
 
-/*bool find_variable_in_table(char* name, MathExpression* exp) {
-
-    assert(exp);
-
-    for (int i = 0; i < MAX_VARS_NUM; i++) {
-        if (exp->variables_table[i].name == name)
-            return true;
-    }
-    return false;
-} */
 
 int find_variable_in_table(char* name, MathExpression* exp) {
 
