@@ -15,12 +15,6 @@ struct TokensArray {
     int tokens_p;
 };
 
-/*struct Name {
-    int type;
-    int number;
-    char* name;
-}; */
-
 struct Names {
     Name names_table[MAX_NAMES_NUM];
     int names_num;
@@ -42,6 +36,7 @@ Node* get_grammar(TokensArray* tokens_arr);
 
 Node* get_number(TokensArray* tokens_arr);
 Node* get_var(TokensArray* tokens_arr);
+Node* get_in(TokensArray* tokens_arr);
 
 Node* get_comparison(TokensArray* tokens_arr);
 Node* get_expression(TokensArray* tokens_arr);
@@ -54,14 +49,14 @@ Node* get_if(TokensArray* tokens_arr);
 Node* get_while(TokensArray* tokens_arr);
 Node* get_operator(TokensArray* tokens_arr);
 
-void string_to_tokens(CodeText* text, int size, TokensArray* tokens_arr);
-Node* read_word(CodeText* text, TokensArray* tokens_arr);
+void string_to_tokens(CodeText* text, int size, TokensArray* tokens_arr, Names* names);
+Node* read_word(CodeText* text, TokensArray* tokens_arr, Names* names);
 Node* read_number(CodeText* text, TokensArray* tokens_arr);
 void skip_spaces(CodeText* text);
 
-int find_name(char* name, Name* table);
+int find_name(char* name, Names* names);
 void fill_names_table(Name* table);
-void copy_vars(MathExpression* new_exp, const Name* names_table);
+void copy_vars(MathExpression* new_exp, const Names* names);
 
 Node* add_separator(Node* node);
 

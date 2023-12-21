@@ -9,10 +9,6 @@
 #include "ReadData.h"
 #include "Diff.h"
 
-static Name names_table[MAX_NAMES_NUM] = {};
-static int names_num = KEYWORDS_NUM;
-static int vars_num = 0;
-
 CodeText* codedata_ctor(const char* str) {
 
     CodeText* data = (CodeText*)calloc(1, sizeof(CodeText));
@@ -52,27 +48,25 @@ Names* names_ctor() {
 
     Names* names = (Names*)calloc(1, sizeof(Names));
     names->names_num = KEYWORDS_NUM;
-    names->vars_num - 0;
+    names->vars_num = 0;
     fill_names_table(names->names_table);
+
+    return names;
 }
 
 MathExpression* create_expression(const char* str, int size) {
 
-    fill_names_table(names_table);
-    //Names* names = names_ctor();
-
+    Names* names = names_ctor();
     CodeText* text = codedata_ctor(str);
     TokensArray* tokens_arr = tokens_ctor();
 
-    string_to_tokens(text, size, tokens_arr);
-
-    //for (int i = 0; i < 19; i++)
-        //printf("arr %d %d\n", tokens_arr->tokens[i]->type, tokens_arr->tokens[i]->data);
+    string_to_tokens(text, size, tokens_arr, names);
 
     Node* root = get_grammar(tokens_arr);
+
     Tree* new_tree = tree_ctor(root);
     MathExpression* new_expression = expression_ctor(new_tree);
-    copy_vars(new_expression, names_table);
+    copy_vars(new_expression, names);
 
     codedata_dtor(text);
 
@@ -100,7 +94,6 @@ Node* get_grammar(TokensArray* tokens_arr) {
         current->right = node2;
         current = node2;
     }
-    //printf("final %d %d\n", node->type, node->data);
     assert(tokens_arr->tokens[tokens_arr->tokens_p]->data == LINE_END);
 
     return node;
@@ -137,6 +130,7 @@ Node* get_comparison(TokensArray* tokens_arr) {
 Node* get_expression(TokensArray* tokens_arr) {
 
     Node* node = get_term(tokens_arr);
+
     while  (tokens_arr->tokens[tokens_arr->tokens_p]->type == T_OP &&
            (tokens_arr->tokens[tokens_arr->tokens_p]->data == ADD ||
             tokens_arr->tokens[tokens_arr->tokens_p]->data == SUB)) {
@@ -255,12 +249,19 @@ Node* get_assign(TokensArray* tokens_arr) {
     node = connect_nodes(oper, node, node2);
 
     Node* sep = tokens_arr->tokens[tokens_arr->tokens_p];
-    //printf("pointer %d\n",tokens_arr->tokens_p);
     tokens_arr->tokens_p++;
 
     connect_nodes(sep, node, NULL);
 
     return sep;
+}
+
+Node* get_in(TokensArray* tokens_arr) {
+
+    Node* in_node = tokens_arr->tokens[tokens_arr->tokens_p];
+    tokens_arr->tokens_p++;
+
+    return in_node;
 }
 
 Node* get_if(TokensArray* tokens_arr) {
@@ -350,10 +351,10 @@ Node* get_operator(TokensArray* tokens_arr) {
         return get_assign(tokens_arr);
 }
 
-int find_name(char* name, Name* table) {
+int find_name(char* name, Names* names) {
 
-    for (int i = 0; i < names_num; i++) {
-        if (strcmp(name, table[i].name) == 0)
+    for (int i = 0; i < names->names_num; i++) {
+        if (strcmp(name, names->names_table[i].name) == 0)
             return i;
     }
     return -1;
@@ -389,14 +390,14 @@ void fill_names_table(Name* table) {
     table[15].name = "ввести";
 }
 
-void copy_vars(MathExpression* new_exp, const Name* names_table) {
+void copy_vars(MathExpression* new_exp, const Names* names) {
 
     assert(new_exp);
 
-    for (size_t i = 0; i < vars_num; i++)
+    for (size_t i = 0; i < names->vars_num; i++)
     {
-        new_exp->variables_table[i].name  = strdup(names_table[KEYWORDS_NUM+i].name);
-        new_exp->variables_table[i].value = names_table[KEYWORDS_NUM+i].number;
+        new_exp->variables_table[i].name  = strdup(names->names_table[KEYWORDS_NUM+i].name);
+        new_exp->variables_table[i].value = names->names_table[KEYWORDS_NUM+i].number;
     }
 }
 
@@ -409,7 +410,7 @@ void skip_spaces(CodeText* text) {
 }
 
 
-void string_to_tokens(CodeText* text, int size, TokensArray* tokens_arr) {
+void string_to_tokens(CodeText* text, int size, TokensArray* tokens_arr, Names* names) {
 
     int i = 0;
 
@@ -557,7 +558,7 @@ void string_to_tokens(CodeText* text, int size, TokensArray* tokens_arr) {
 
             default: {
 
-                tokens_arr->tokens[i] = read_word(text, tokens_arr);
+                tokens_arr->tokens[i] = read_word(text, tokens_arr, names);
                 i++;
             }
 
@@ -565,7 +566,7 @@ void string_to_tokens(CodeText* text, int size, TokensArray* tokens_arr) {
     }
 }
 
-Node* read_word(CodeText* text, TokensArray* tokens_arr) {
+Node* read_word(CodeText* text, TokensArray* tokens_arr, Names* names) {
 
     char token[MAX_LINE_LEN] = "";
     int old_pointer = text->pointer;
@@ -578,18 +579,20 @@ Node* read_word(CodeText* text, TokensArray* tokens_arr) {
         text->pointer++;
     }
 
-    int name = find_name(token, names_table);
+    int name = find_name(token, names);
+    printf("token %s ", token);
+    printf("name %d\n", name);
 
     if (name == -1) {
-        names_table[names_num].name = strdup(token);
-        names_table[names_num].number = vars_num;
-        names_table[names_num].type = T_VAR;
-        name = names_num;
-        names_num ++;
-        vars_num ++;
+        names->names_table[names->names_num].name = strdup(token);
+        names->names_table[names->names_num].number = names->vars_num;
+        names->names_table[names->names_num].type = T_VAR;
+        name = names->names_num;
+        names->names_num ++;
+        names->vars_num ++;
     }
 
-    return node_ctor(names_table[name].type, names_table[name].number, NULL, NULL);
+    return node_ctor(names->names_table[name].type, names->names_table[name].number, NULL, NULL);
 }
 
 Node* read_number(CodeText* text, TokensArray* tokens_arr) {
