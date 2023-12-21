@@ -136,7 +136,7 @@ Node* get_comparison(TokensArray* tokens_arr) {
 
 Node* get_expression(TokensArray* tokens_arr) {
 
-    Node* node = get_T(tokens_arr);
+    Node* node = get_term(tokens_arr);
     while  (tokens_arr->tokens[tokens_arr->tokens_p]->type == T_OP &&
            (tokens_arr->tokens[tokens_arr->tokens_p]->data == ADD ||
             tokens_arr->tokens[tokens_arr->tokens_p]->data == SUB)) {
@@ -144,7 +144,7 @@ Node* get_expression(TokensArray* tokens_arr) {
         Node* oper = tokens_arr->tokens[tokens_arr->tokens_p];
         tokens_arr->tokens_p++;
 
-        Node* node2 = get_T(tokens_arr);
+        Node* node2 = get_term(tokens_arr);
 
         node = connect_nodes(oper, node, node2);
     }
@@ -152,7 +152,7 @@ Node* get_expression(TokensArray* tokens_arr) {
 }
 
 
-Node* get_T(TokensArray* tokens_arr) {
+Node* get_term(TokensArray* tokens_arr) {
 
     Node* node = get_degree(tokens_arr);
 

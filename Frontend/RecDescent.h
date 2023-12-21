@@ -45,7 +45,7 @@ Node* get_var(TokensArray* tokens_arr);
 
 Node* get_comparison(TokensArray* tokens_arr);
 Node* get_expression(TokensArray* tokens_arr);
-Node* get_T(TokensArray* tokens_arr);
+Node* get_term(TokensArray* tokens_arr);
 Node* get_primary(TokensArray* tokens_arr);
 Node* get_degree(TokensArray* tokens_arr);
 Node* get_assign(TokensArray* tokens_arr);
